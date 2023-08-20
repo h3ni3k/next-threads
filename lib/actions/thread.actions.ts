@@ -5,7 +5,7 @@ import Thread from '../models/thread.model';
 import User from '../models/user.model';
 import { connectToDB } from '../mongoose';
 
-interface Params {
+interface CreateThreadParams {
   text: string;
   author: string;
   communityId: string | null;
@@ -17,7 +17,7 @@ export async function createThread({
   communityId,
   path,
   text,
-}: Params) {
+}: CreateThreadParams) {
   try {
     connectToDB();
 
@@ -107,5 +107,43 @@ export async function fetchThreadById(threadId: string) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     throw new Error(`Error fetching a thread: ${error.message}`);
+  }
+}
+
+export async function addCommentToThread(
+  threadId: string,
+  commentText: string,
+  userId: string,
+  path: string
+) {
+  connectToDB();
+
+  try {
+    const originalThread = await Thread.findById(threadId);
+
+    if (!originalThread) {
+      throw new Error('Thread not found!');
+    }
+
+    // Create new thread with comment text
+    const commentThread = new Thread({
+      text: commentText,
+      author: userId,
+      parentId: threadId,
+    });
+
+    // Save new thread(comment)
+    const savedCommentThread = await commentThread.save();
+
+    // Update parent thread to include new comment
+    originalThread.children.push(savedCommentThread._id);
+
+    // Save updated original thread
+    await originalThread.save();
+
+    revalidatePath(path);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    throw new Error(`Error adding comment to thread ${error.message}}`);
   }
 }
