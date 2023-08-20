@@ -33,6 +33,7 @@
       1,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ], //should add ".ts" if typescript project
-    "no-empty-pattern": "off"
+    "no-empty-pattern": "off",
+    "no-unused-vars": "off"
   }
 }
