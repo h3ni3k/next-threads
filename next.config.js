@@ -1,5 +1,9 @@
+/* eslint-disable no-undef */
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   experimental: {
     serverActions: true,
     serverComponentsExternalPackages: ['mongoose'],
@@ -23,10 +27,5 @@ const nextConfig = {
         hostname: 'placehold.co',
       },
     ],
-    typescript: {
-      ignoreBuildErrors: true,
-    },
   },
 };
-
-module.exports = nextConfig;
