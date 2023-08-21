@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { fetchUserThreads } from '@/lib/actions/user.actions';
+import { fetchCommunityPosts } from '@/lib/actions/community.actions';
+import { fetchUserPosts } from '@/lib/actions/user.actions';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import ThreadCard from '../cards/ThreadCard';
@@ -12,7 +13,14 @@ type Props = {
 
 const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
   // TODO: Fetch profile threads
-  const result = await fetchUserThreads(accountId);
+
+  let result: any;
+
+  if (accountType === 'Community') {
+    result = await fetchCommunityPosts(accountId);
+  } else {
+    result = fetchUserPosts(accountId);
+  }
 
   if (!result) redirect('/');
 
