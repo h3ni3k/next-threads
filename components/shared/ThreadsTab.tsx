@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { fetchUserThreads } from '@/lib/actions/user.actions';
 import { redirect } from 'next/navigation';
 import React from 'react';

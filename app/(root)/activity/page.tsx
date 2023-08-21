@@ -1,4 +1,3 @@
-import UserCard from '@/components/cards/UserCard';
 import { fetchUser, getActivity } from '@/lib/actions/user.actions';
 import { currentUser } from '@clerk/nextjs';
 import Image from 'next/image';
