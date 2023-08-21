@@ -144,6 +144,6 @@ export async function addCommentToThread(
     revalidatePath(path);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    throw new Error(`Error adding comment to thread ${error.message}}`);
+    throw new Error(`Error adding comment to thread ${error.message}`);
   }
 }
